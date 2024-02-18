@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ZenFlow</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in_with_google">Sign in with google</string>
+    <string name="log_in">Log in</string>
+    <string name="new_user_sign_up">New User? Sign up</string>
+</resources>
