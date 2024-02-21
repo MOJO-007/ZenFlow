@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.activity.RegLogActivity">
 
     <EditText
         android:id="@+id/editTextEmail"
@@ -142,4 +142,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.05" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/gdLoginMid"
+        app:layout_constraintEnd_toStartOf="@+id/gdLoginRight"
+        app:layout_constraintStart_toStartOf="@+id/gdLoginLeft"
+        app:layout_constraintTop_toTopOf="@+id/gdLoginUp"
+        app:srcCompat="@drawable/login" />
 </androidx.constraintlayout.widget.ConstraintLayout>
