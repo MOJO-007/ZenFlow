@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "789085715708",
+    "project_id": "zenflow-a8dca",
+    "storage_bucket": "zenflow-a8dca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789085715708:android:2386574d2ddfb25d6ceb79",
+        "android_client_info": {
+          "package_name": "com.example.zenflow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCefDB7-PWi2D_0GXAUVsR9YEftdVxRkTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

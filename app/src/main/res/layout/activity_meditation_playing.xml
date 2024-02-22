@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:foregroundTint="@color/primary"
     tools:context=".ui.activity.MeditationPlayingActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -46,13 +47,13 @@
         app:layout_constraintStart_toStartOf="@+id/gdPlayingLeft"
         app:layout_constraintTop_toTopOf="@+id/gdPlayingTop">
 
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@tools:sample/avatars"
-            app:srcCompat="@drawable/playing" />
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView4"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:scaleType="fitXY"-->
+<!--            android:src="@tools:sample/avatars"-->
+<!--            app:srcCompat="@drawable/playing" />-->
 
     </androidx.cardview.widget.CardView>
 
@@ -93,5 +94,43 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.7" />
+
+    <TextView
+        android:id="@+id/textMeditationTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Mindful Breathing"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/gdPlayingRight"
+        app:layout_constraintStart_toStartOf="@+id/gdPlayingLeft"
+        app:layout_constraintTop_toTopOf="@+id/gdPlayingImgEnd" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:foregroundTint="@color/primary"
+        android:progress="50"
+        android:progressTint="@color/primary"
+        app:layout_constraintEnd_toStartOf="@+id/gdPlayingRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/gdPlayingLeft"
+        app:layout_constraintTop_toTopOf="@+id/gdPlayingTitleEnd" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_play"
+        android:foregroundGravity="center"
+        android:padding="5dp"
+        android:paddingStart="7dp"
+        app:srcCompat="@android:drawable/ic_media_play"
+        tools:layout_editor_absoluteX="166dp"
+        tools:layout_editor_absoluteY="540dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
