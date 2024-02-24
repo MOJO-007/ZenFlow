@@ -18,8 +18,8 @@ import com.example.zenflow.R
 import com.example.zenflow.databinding.ActivityMainContainerBinding
 import com.example.zenflow.ui.fragment.GuidedFragment
 import com.example.zenflow.ui.fragment.RecommendedFragment
-import com.example.zenflow.ui.fragment.SleepyFragment
 import com.example.zenflow.ui.fragment.UnguidedFragment
+import com.example.zenflow.ui.fragment.UserDetailsFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
@@ -55,10 +55,10 @@ class MainContainerActivity : AppCompatActivity() {
             getColorIcon(R.drawable.ic_unguided, R.color.primary)
         )
         viewPagerAdapter.addFragment(
-            SleepyFragment(),
-            getString(R.string.sleepy),
-            getColorIcon(R.drawable.ic_sleepy, R.color.grey2),
-            getColorIcon(R.drawable.ic_sleepy, R.color.primary)
+            UserDetailsFragment(),
+            getString(R.string.user),
+            getColorIcon(R.drawable.ic_user, R.color.grey2),
+            getColorIcon(R.drawable.ic_user, R.color.primary)
         )
 
         binding.viewPagerMain.adapter = viewPagerAdapter

@@ -11,7 +11,7 @@
     <string name="recommended">Recommended</string>
     <string name="guided">Guided</string>
     <string name="unguided">Un-guided</string>
-    <string name="sleepy">Sleepy</string>
+    <string name="user">User</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="now_playing">Now Playing</string>
     <string name="username">Username</string>

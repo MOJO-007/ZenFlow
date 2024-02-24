@@ -13,12 +13,19 @@ import com.example.zenflow.R
 import com.example.zenflow.databinding.FragmentLoginBinding
 import com.example.zenflow.databinding.FragmentRegisterBinding
 import com.example.zenflow.models.User
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.auth.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterFragment : Fragment() {
+
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var dbref: CollectionReference
 
@@ -37,20 +44,22 @@ class RegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.btnRegister.setOnClickListener {
             val altBuilder = AlertDialog.Builder(requireContext())
-            val user=User(userName = binding.editTextUsername.text.toString(),
-                userEmail = binding.editTextRegEmail.text.toString(),
-                userPassword = binding.editTextRegPassword.text.toString())
+            val userName = binding.editTextUsername.text.toString()
+            val userEmail = binding.editTextRegEmail.text.toString()
+            val userPassword = binding.editTextRegPassword.text.toString()
 
+            if(userPassword.length < 6){
+                Toast.makeText(requireContext(), "Password must be of minimum 6 characters" ,Toast.LENGTH_SHORT).show()
+            }
 
-            if(user.userName.isNotEmpty()&& user.userEmail.isNotEmpty()  && user.userPassword.isNotEmpty()){
+            else if(userName.isNotEmpty()&& userEmail.isNotEmpty()  && userPassword.isNotEmpty()){
                 altBuilder.setTitle("Are you Sure?")
                     .setMessage("Pressing YES will register you username with the entered password")
                     .setPositiveButton("YES"){dialog,which->
-                        registerUser(user)
+                        registerUser(userName,userEmail,userPassword)
                         binding.editTextUsername.text = null
                         binding.editTextRegEmail.text=null
                         binding.editTextRegPassword.text=null
-                        Toast.makeText(requireContext(), "User Registered" ,Toast.LENGTH_SHORT).show()
                     }
                     .setNegativeButton("NO"){dialog,which->
                         dialog.dismiss()
@@ -63,11 +72,29 @@ class RegisterFragment : Fragment() {
             }
         }
     }
-    private fun registerUser(user:User){
-        dbref.add(user).addOnCompleteListener{
-            Log.d("Successfull Register","Registration done")
-        }.addOnFailureListener{
-            Log.d("Failure","Registration failed")
-        }
+    private fun registerUser(username:String, email:String, password:String){
+        auth = Firebase.auth
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(requireActivity()) { task ->
+                if (task.isSuccessful) {
+                    // Registration successful, proceed to next step
+                    Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
+                    // Navigate to the appropriate screen
+                } else {
+                    Toast.makeText(context, "Registration failed.", Toast.LENGTH_SHORT).show()
+                    val exc = task.exception
+                    if (exc is FirebaseAuthUserCollisionException) {
+                        Toast.makeText(context, "Email already in use", Toast.LENGTH_SHORT).show()
+                        }
+
+                }
+            }
+
+        val user=User(
+            userName = username,
+            userEmail = auth.currentUser?.email,
+            userPassword = password)
+        dbref.add(user)
     }
 }

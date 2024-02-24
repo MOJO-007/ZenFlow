@@ -13,7 +13,7 @@
         android:theme="@style/Theme.ZenFlow"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.WelcomeActivity"
+            android:name=".ui.activity.RegLogActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.MeditationPlayingActivity"
@@ -22,10 +22,10 @@
             android:name=".ui.activity.TypeSelectionActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.MainContainerActivity"
+            android:name=".ui.activity.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.RegLogActivity"
+            android:name=".ui.activity.MainContainerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -90,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnGetStarted"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_button"
