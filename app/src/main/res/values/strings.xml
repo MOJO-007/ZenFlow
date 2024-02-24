@@ -4,7 +4,7 @@
     <string name="password">Password</string>
     <string name="sign_in_with_google">Sign in with google</string>
     <string name="log_in">Log in</string>
-    <string name="signup">New User? Sign up</string>
+    <string name="signup">Don\'t have an account? Sign up</string>
     <string name="guided_meditation">Guided meditation</string>
     <string name="explore_a_vareity_of_guided_meditations">Explore a vareity of guided meditations</string>
     <!-- TODO: Remove or change this placeholder text -->
