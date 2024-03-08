@@ -23,7 +23,6 @@ class RegLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         binding = ActivityRegLogBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
 
         dbref = FirebaseDatabase.getInstance().getReference("user")

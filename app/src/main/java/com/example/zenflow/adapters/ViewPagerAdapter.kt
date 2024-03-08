@@ -1,6 +1,7 @@
 package com.example.zenflow.adapters
 
 import android.graphics.drawable.Drawable
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -26,7 +27,8 @@ class ViewPagerAdapter(activity: FragmentActivity) : FragmentStateAdapter(activi
         return fragmentArrayList.size
     }
 
-    fun addFragment(fragment: Fragment, title: String, iconResId: Drawable?, selectedIconResId: Drawable?) {
+    fun addFragment(fragment: Fragment, title: String, iconResId: Drawable?, selectedIconResId: Drawable?, data: Bundle?) {
+        fragment.arguments= data
         fragmentArrayList.add(fragment)
         fragmentTittle.add(title)
         fragmentIconResIds.add(iconResId)

@@ -78,6 +78,12 @@ class RegisterFragment : Fragment() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
+                    val user=User(
+                        userName = username,
+                        userEmail = auth.currentUser?.email,
+                        userPassword = password,
+                        imageUri = null)
+                    dbref.add(user)
                     // Registration successful, proceed to next step
                     Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
                     // Navigate to the appropriate screen
@@ -91,10 +97,6 @@ class RegisterFragment : Fragment() {
                 }
             }
 
-        val user=User(
-            userName = username,
-            userEmail = auth.currentUser?.email,
-            userPassword = password)
-        dbref.add(user)
+
     }
 }

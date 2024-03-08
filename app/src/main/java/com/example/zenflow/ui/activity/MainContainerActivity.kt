@@ -5,8 +5,10 @@ import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract.Data
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 //import com.example.weis.R
 //import com.example.weis.databinding.ActivityMainContainerBinding
@@ -30,9 +32,12 @@ class MainContainerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val userEmail = intent.getStringExtra("userEmail")
+        val bundle = Bundle()
+        bundle.putString("userEmail", userEmail)
+//        Toast.makeText(this, "$bundle", Toast.LENGTH_LONG).show()
         binding = ActivityMainContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         window.statusBarColor = ContextCompat.getColor(this, R.color.primary)
 
         val viewPagerAdapter = ViewPagerAdapter(this)
@@ -40,25 +45,25 @@ class MainContainerActivity : AppCompatActivity() {
             RecommendedFragment(),
             getString(R.string.recommended),
             getColorIcon(R.drawable.ic_recommended, R.color.grey2),
-            getColorIcon(R.drawable.ic_recommended, R.color.primary)
+            getColorIcon(R.drawable.ic_recommended, R.color.primary),data = bundle
         )
         viewPagerAdapter.addFragment(
             GuidedFragment(),
             getString(R.string.guided),
             getColorIcon(R.drawable.ic_guided, R.color.grey2),
-            getColorIcon(R.drawable.ic_guided, R.color.primary)
+            getColorIcon(R.drawable.ic_guided, R.color.primary),data = bundle
         )
         viewPagerAdapter.addFragment(
             UnguidedFragment(),
             getString(R.string.unguided),
             getColorIcon(R.drawable.ic_unguided, R.color.grey2),
-            getColorIcon(R.drawable.ic_unguided, R.color.primary)
+            getColorIcon(R.drawable.ic_unguided, R.color.primary),data = bundle
         )
         viewPagerAdapter.addFragment(
             UserDetailsFragment(),
             getString(R.string.user),
             getColorIcon(R.drawable.ic_user, R.color.grey2),
-            getColorIcon(R.drawable.ic_user, R.color.primary)
+            getColorIcon(R.drawable.ic_user, R.color.primary),data = bundle
         )
 
         binding.viewPagerMain.adapter = viewPagerAdapter
