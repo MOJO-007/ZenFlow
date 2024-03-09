@@ -1,12 +1,14 @@
 package com.example.zenflow.ui.fragment
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.example.zenflow.R
 import com.example.zenflow.databinding.ActivityRegLogBinding
 import com.example.zenflow.databinding.FragmentLoginBinding
@@ -15,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.FirebaseFirestore
+import java.net.URI
 
 class LoginFragment : Fragment() {
 
@@ -45,21 +48,35 @@ class LoginFragment : Fragment() {
     }
 
     private fun loginUser(email: String, password: String) {
+        var userName:String
+        var id:String
+        var imageUri: String
+        var userMobileNumber:String
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Login successful
                     Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(requireContext(), MainContainerActivity::class.java)
 
-//                    val q = dbref.whereEqualTo("userEmail",email)
-//                    q.get().addOnCompleteListener {
-//                        val ds = it.result?.getDocuments()?.get(0)
-//                    }
+                    val q = dbref.whereEqualTo("userEmail",email)
+                    q.get().addOnCompleteListener {
+                        val ds = it.result?.getDocuments()?.get(0)
+                        id=ds?.id.toString()
+                        userName= ds?.getString("userName").toString()
+                        imageUri= ds?.getString("imageUri").toString()
+                        userMobileNumber=ds?.getString("userMobileNumber").toString()
+//                        Toast.makeText(requireContext(), "$imageUri", Toast.LENGTH_LONG).show()
+                        val intent = Intent(requireContext(), MainContainerActivity::class.java)
+                        intent.putExtra("id",id)
+                        intent.putExtra("userEmail",email)
+                        intent.putExtra("userName",userName)
+                        intent.putExtra("imageUri",imageUri)
+                        intent.putExtra("userMobileNumber",userMobileNumber)
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
 
-                    intent.putExtra("userEmail",email)
-                    startActivity(intent)
-                    requireActivity().finish()
+
                 } else {
                     // Login failed
                     Toast.makeText(requireContext(), "Authentication failed", Toast.LENGTH_SHORT).show()

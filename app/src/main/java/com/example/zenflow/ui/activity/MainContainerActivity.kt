@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 //import com.example.weis.R
 //import com.example.weis.databinding.ActivityMainContainerBinding
 import com.example.zenflow.adapters.ViewPagerAdapter
@@ -32,12 +33,25 @@ class MainContainerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val userEmail = intent.getStringExtra("userEmail")
-        val bundle = Bundle()
-        bundle.putString("userEmail", userEmail)
-//        Toast.makeText(this, "$bundle", Toast.LENGTH_LONG).show()
         binding = ActivityMainContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val userEmail = intent.getStringExtra("userEmail")
+        val userName = intent.getStringExtra("userName")
+        val imageUri = intent.getStringExtra("imageUri")
+        val id=intent.getStringExtra("id")
+        val userMobileNumber = intent.getStringExtra("userMobileNumber")
+        val bundle = Bundle()
+        bundle.putString("userEmail", userEmail)
+        bundle.putString("userName",userName)
+//        imageUri?.let {
+//            bundle.putString("imageUri", it.toString())
+//        }
+        bundle.putString("ImageUri",imageUri)
+        bundle.putString("id",id)
+        bundle.putString("userMobileNumber",userMobileNumber)
+//        Toast.makeText(this, "$imageUri", Toast.LENGTH_LONG).show()
+
         window.statusBarColor = ContextCompat.getColor(this, R.color.primary)
 
         val viewPagerAdapter = ViewPagerAdapter(this)

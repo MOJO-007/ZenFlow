@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
@@ -18,6 +19,9 @@ import com.bumptech.glide.Glide
 import com.example.zenflow.R
 import com.example.zenflow.databinding.FragmentRegisterBinding
 import com.example.zenflow.databinding.FragmentUserDetailsBinding
+import com.example.zenflow.ui.activity.EditProfileActivity
+import com.example.zenflow.ui.activity.MainContainerActivity
+import com.example.zenflow.ui.activity.WelcomeActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
@@ -46,28 +50,26 @@ class UserDetailsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        var userName:String?
-        var id:String=""
-        var imageUri:Uri?
+        val userName = arguments?.getString("userName")
+        val id:String? = arguments?.getString("id")
+        var imageUri:Uri? = arguments?.getString("ImageUri")?.toUri()
         val email = arguments?.getString("userEmail")
-        val q = dbref.whereEqualTo("userEmail",email)
-        q.get().addOnCompleteListener {
-            val ds = it.result?.getDocuments()?.get(0)
-            id=ds?.id.toString()
-            userName= ds?.getString("userName").toString()
-            imageUri= ds?.getString("imageUri")?.toUri()
-            if (imageUri == null){
-                Glide.with(this)
-                    .load(R.drawable.ic_add_image)
-                    .error((R.drawable.ic_add_image))
-                    .into(binding.userImage)
-            }
+        val userMobileNumber = arguments?.getString("userMobileNumber")
+//        Toast.makeText(requireContext(), "$imageUri", Toast.LENGTH_LONG).show()
+        if (imageUri == null){
+            Glide.with(this)
+                .load(R.drawable.ic_add_image)
+                .error((R.drawable.ic_add_image))
+                .into(binding.userImage)
+        }else{
             Glide.with(this)
                 .load(imageUri)
                 .error(R.drawable.ic_add_image)
                 .into(binding.userImage)
             binding.textViewUserNAme.setText(userName)
         }
+
+
 
 
         super.onViewCreated(view, savedInstanceState)
@@ -86,9 +88,9 @@ class UserDetailsFragment : Fragment() {
                  fileRef.downloadUrl.addOnSuccessListener { uri ->
                      binding.userImage.setImageURI(it)
                      val imUri = uri.toString()
-                     val userDocRef = dbref.document(id)
-                     userDocRef.update("imageUri", imUri)
-                         .addOnSuccessListener {
+                     val userDocRef = id?.let { it1 -> dbref.document(it1) }
+                     userDocRef?.update("imageUri", imUri)
+                         ?.addOnSuccessListener {
                              Log.e("Done", "Donee")
                          }
                  }
@@ -97,6 +99,24 @@ class UserDetailsFragment : Fragment() {
         }
         binding.userImage.setOnClickListener{
             resultLauncher.launch("image/*")
+        }
+
+        binding.btnLogOut.setOnClickListener {
+            auth.signOut()
+            val intent = Intent(requireContext(), WelcomeActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        binding.btnEditProfile.setOnClickListener {
+            val intent = Intent(requireContext(), EditProfileActivity::class.java)
+            intent.putExtra("id",id)
+            intent.putExtra("userEmail",email)
+            intent.putExtra("userName",userName)
+            intent.putExtra("imageUri",imageUri)
+            intent.putExtra("userMobileNumber",userMobileNumber)
+            startActivity(intent)
+            requireActivity().finish()
         }
     }
 

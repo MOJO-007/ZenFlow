@@ -60,6 +60,7 @@ class RegisterFragment : Fragment() {
                         binding.editTextUsername.text = null
                         binding.editTextRegEmail.text=null
                         binding.editTextRegPassword.text=null
+                        binding.editTextPhone.text=null
                     }
                     .setNegativeButton("NO"){dialog,which->
                         dialog.dismiss()
@@ -77,12 +78,14 @@ class RegisterFragment : Fragment() {
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
+                val userMobileNumber=binding.editTextPhone.text.toString()
                 if (task.isSuccessful) {
                     val user=User(
                         userName = username,
                         userEmail = auth.currentUser?.email,
                         userPassword = password,
-                        imageUri = null)
+                        imageUri = null,
+                        userMobileNumber=userMobileNumber)
                     dbref.add(user)
                     // Registration successful, proceed to next step
                     Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
