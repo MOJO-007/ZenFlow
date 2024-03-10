@@ -47,6 +47,7 @@ class RegisterFragment : Fragment() {
             val userName = binding.editTextUsername.text.toString()
             val userEmail = binding.editTextRegEmail.text.toString()
             val userPassword = binding.editTextRegPassword.text.toString()
+            val userMobileNumber = binding.editTextPhone.text.toString()
 
             if(userPassword.length < 6){
                 Toast.makeText(requireContext(), "Password must be of minimum 6 characters" ,Toast.LENGTH_SHORT).show()
@@ -56,7 +57,7 @@ class RegisterFragment : Fragment() {
                 altBuilder.setTitle("Are you Sure?")
                     .setMessage("Pressing YES will register you username with the entered password")
                     .setPositiveButton("YES"){dialog,which->
-                        registerUser(userName,userEmail,userPassword)
+                        registerUser(userName,userEmail,userPassword,userMobileNumber)
                         binding.editTextUsername.text = null
                         binding.editTextRegEmail.text=null
                         binding.editTextRegPassword.text=null
@@ -73,7 +74,7 @@ class RegisterFragment : Fragment() {
             }
         }
     }
-    private fun registerUser(username:String, email:String, password:String){
+    private fun registerUser(username:String, email:String, password:String, number:String){
         auth = Firebase.auth
 
         auth.createUserWithEmailAndPassword(email, password)
@@ -85,7 +86,7 @@ class RegisterFragment : Fragment() {
                         userEmail = auth.currentUser?.email,
                         userPassword = password,
                         imageUri = null,
-                        userMobileNumber=userMobileNumber)
+                        userMobileNumber=number)
                     dbref.add(user)
                     // Registration successful, proceed to next step
                     Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
