@@ -37,6 +37,7 @@
         app:layout_constraintGuide_percent="0.95" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/imgThumbnail"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="55dp"
@@ -48,14 +49,11 @@
         app:layout_constraintStart_toStartOf="@+id/gdPlayingLeft"
         app:layout_constraintTop_toTopOf="@+id/gdPlayingTop">
 
-        <!--        <ImageView-->
-        <!--            android:id="@+id/imageView4"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:scaleType="fitXY"-->
-        <!--            android:src="@tools:sample/avatars"-->
-        <!--            app:srcCompat="@drawable/playing" />-->
-
+        <ImageView
+            android:id="@+id/imageThumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/user" />
     </androidx.cardview.widget.CardView>
 
     <androidx.constraintlayout.widget.Guideline

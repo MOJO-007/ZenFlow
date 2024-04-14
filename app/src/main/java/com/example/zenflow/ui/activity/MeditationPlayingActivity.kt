@@ -1,6 +1,7 @@
 package com.example.zenflow.ui.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,9 +10,12 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SeekBar
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.zenflow.R
 import com.example.zenflow.databinding.ActivityMeditationPlayingBinding
 import com.example.zenflow.databinding.ActivityWelcomeBinding
+import com.example.zenflow.ui.fragment.UserDetailsFragment
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
 
@@ -21,6 +25,7 @@ class MeditationPlayingActivity : AppCompatActivity() {
     val mediaPlayer = MediaPlayer()
     private lateinit var playPauseButton: ImageButton
     private lateinit var musicSeekBar: SeekBar
+    private var updateThread: Thread? = null
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -29,11 +34,20 @@ class MeditationPlayingActivity : AppCompatActivity() {
         binding = ActivityMeditationPlayingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val musicName = intent.getStringExtra("name")
+        val thumbnailImage = intent.getStringExtra("thumbnail")
+//        Toast.makeText(this, "$thumbnailImage", Toast.LENGTH_LONG).show()
         val storageRef = FirebaseStorage.getInstance().reference
-        val musicRef = storageRef.child("music/example2.mp3")
-        val localFile = File(this.getExternalFilesDir(null), "example.mp3")
+        val musicRef = storageRef.child("music/$musicName.mp3")
+        val localFile = File(this.getExternalFilesDir(null), "$musicName.mp3")
         playPauseButton = binding.btnPlayPause
         musicSeekBar = binding.seekBar
+
+        Glide.with(this)
+            .load(thumbnailImage)
+            .error(R.drawable.ic_add_image)
+            .into(binding.imageThumbnail)
+//            .into(binding.imgThumbnail)
 
         if (localFile.exists()) {
             Toast.makeText(this, "DID NOT DOWNLOAD", Toast.LENGTH_SHORT).show()
@@ -92,23 +106,25 @@ class MeditationPlayingActivity : AppCompatActivity() {
             }
         })
 
-        Thread {
-            while (true) {
-                try {
+        updateThread = Thread {
+            try {
+                while (!Thread.currentThread().isInterrupted) {
                     Thread.sleep(1000)
                     runOnUiThread {
                         musicSeekBar.progress = mediaPlayer.currentPosition
                     }
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
                 }
+            } catch (e: InterruptedException) {
+                // Restore interrupt status
+                Thread.currentThread().interrupt()
+                e.printStackTrace()
             }
-        }.start()
-
-
+        }
+        updateThread?.start()
 
         binding.imgBack.setOnClickListener{
-            this.finish()
+            updateThread?.interrupt()
+            finish() // Finish the current activity
         }
     }
     override fun onDestroy() {
@@ -121,6 +137,15 @@ class MeditationPlayingActivity : AppCompatActivity() {
         if (mediaPlayer.isPlaying) {
             mediaPlayer.pause()
         }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Stop the background thread
+        updateThread?.interrupt()
+
+        // Finish the current activity
+        finish()
     }
 
     private fun playMusic(file: File) {

@@ -6,4 +6,5 @@
     <color name="grey">#e7f1f3</color>
     <color name="googleColor">#4285F4</color>
     <color name="grey2">#909090</color>
+    <color name="transparent">#00000000</color>
 </resources>
