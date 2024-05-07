@@ -39,6 +39,7 @@ class MeditationPlayingActivity : AppCompatActivity() {
 //        Toast.makeText(this, "$thumbnailImage", Toast.LENGTH_LONG).show()
         val storageRef = FirebaseStorage.getInstance().reference
         val musicRef = storageRef.child("music/$musicName.mp3")
+//        Toast.makeText(this, "$musicRef", Toast.LENGTH_SHORT).show()
         val localFile = File(this.getExternalFilesDir(null), "$musicName.mp3")
         playPauseButton = binding.btnPlayPause
         musicSeekBar = binding.seekBar
@@ -48,13 +49,12 @@ class MeditationPlayingActivity : AppCompatActivity() {
             .error(R.drawable.ic_add_image)
             .into(binding.imageThumbnail)
 //            .into(binding.imgThumbnail)
-
         if (localFile.exists()) {
-            Toast.makeText(this, "DID NOT DOWNLOAD", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "DID NOT DOWNLOAD", Toast.LENGTH_SHORT).show()
             playMusic(localFile)
         } else {
             // Music file doesn't exist locally, download it
-            Toast.makeText(this, "DOWNLOADED", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "DOWNLOADED", Toast.LENGTH_SHORT).show()
             musicRef.getFile(localFile)
                 .addOnSuccessListener {
                     // File downloaded successfully, play it
@@ -75,14 +75,14 @@ class MeditationPlayingActivity : AppCompatActivity() {
             }
         }
         // Show a toast when the SeekBar is touched
-        musicSeekBar.setOnTouchListener { _, event ->
-            // Show a toast when the SeekBar is touched
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                Toast.makeText(this, "YOU CANNOT FAST FORWARD A MEDITATION", Toast.LENGTH_SHORT).show()
-            }
-            // Consume touch events to prevent seeking
-            true
-        }
+//        musicSeekBar.setOnTouchListener { _, event ->
+//            // Show a toast when the SeekBar is touched
+//            if (event.action == MotionEvent.ACTION_DOWN) {
+//                Toast.makeText(this, "YOU CANNOT FAST FORWARD A MEDITATION", Toast.LENGTH_SHORT).show()
+//            }
+//            // Consume touch events to prevent seeking
+//            true
+//        }
 
 
         mediaPlayer.setOnPreparedListener {
@@ -112,6 +112,15 @@ class MeditationPlayingActivity : AppCompatActivity() {
                     Thread.sleep(1000)
                     runOnUiThread {
                         musicSeekBar.progress = mediaPlayer.currentPosition
+//                        Toast.makeText(this, "${musicSeekBar.progress}, ${musicSeekBar.max}", Toast.LENGTH_SHORT).show()
+                    }
+                    if (musicSeekBar.progress >= musicSeekBar.max) {
+                        // Perform other actions like starting a new activity
+                        val intent = Intent(this@MeditationPlayingActivity, MeditationCompleteActivity::class.java)
+                        startActivity(intent)
+                        this@MeditationPlayingActivity.finish() // Assuming this code is inside an Activity class
+                        // Interrupt the thread to stop it from running continuously
+                        updateThread?.interrupt()
                     }
                 }
             } catch (e: InterruptedException) {
@@ -126,6 +135,7 @@ class MeditationPlayingActivity : AppCompatActivity() {
             updateThread?.interrupt()
             finish() // Finish the current activity
         }
+
     }
     override fun onDestroy() {
         super.onDestroy()
@@ -150,8 +160,11 @@ class MeditationPlayingActivity : AppCompatActivity() {
 
     private fun playMusic(file: File) {
         // Play the music using MediaPlayer or ExoPlayer
+
         mediaPlayer.setDataSource(file.path)
+
         mediaPlayer.prepare()
+
         mediaPlayer.start()
     }
 }

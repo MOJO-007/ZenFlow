@@ -56,12 +56,12 @@ class MainContainerActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.primary)
 
         val viewPagerAdapter = ViewPagerAdapter(this)
-        viewPagerAdapter.addFragment(
-            RecommendedFragment(),
-            getString(R.string.recommended),
-            getColorIcon(R.drawable.ic_recommended, R.color.grey2),
-            getColorIcon(R.drawable.ic_recommended, R.color.primary),data = bundle
-        )
+//        viewPagerAdapter.addFragment(
+//            RecommendedFragment(),
+//            getString(R.string.recommended),
+//            getColorIcon(R.drawable.ic_recommended, R.color.grey2),
+//            getColorIcon(R.drawable.ic_recommended, R.color.primary),data = bundle
+//        )
         viewPagerAdapter.addFragment(
             GuidedFragment(),
             getString(R.string.guided),

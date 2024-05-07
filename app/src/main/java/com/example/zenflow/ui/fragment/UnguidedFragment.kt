@@ -31,7 +31,7 @@ class UnguidedFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        dbref = FirebaseFirestore.getInstance().collection("music")
+        dbref = FirebaseFirestore.getInstance().collection("unguided")
         binding.recyclerViewMusic.layoutManager = LinearLayoutManager(context)
         adapter = MusicAdapter(requireActivity())
         binding.recyclerViewMusic.adapter = adapter
@@ -42,7 +42,7 @@ class UnguidedFragment : Fragment() {
                     val data = document.data
                     var music = Music(
                         musicName = data["name"].toString(),
-                        musicSound = data["sound"].toString(),
+                        musicSound = null,
                         thumbnailImage = data["image"].toString()
                     )
                     musicList.add(music)

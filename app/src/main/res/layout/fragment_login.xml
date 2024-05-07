@@ -41,28 +41,6 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
             tools:layout_editor_absoluteX="40dp" />
 
-        <Button
-            android:id="@+id/buttonGoogle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_button"
-            android:backgroundTint="@color/googleColor"
-            android:drawableStart="@drawable/ic_google"
-            android:drawableTint="@color/white"
-            android:fontFamily="@font/roboto_regular"
-            android:foregroundTint="@color/white"
-            android:padding="0sp"
-            android:paddingStart="20sp"
-            android:text="@string/sign_in_with_google"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
         <Button
             android:id="@+id/btnLogin"
@@ -73,7 +51,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/buttonGoogle"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
