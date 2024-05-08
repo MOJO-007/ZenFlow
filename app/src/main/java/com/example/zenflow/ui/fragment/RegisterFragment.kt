@@ -1,6 +1,7 @@
 package com.example.zenflow.ui.fragment
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.util.Log.*
@@ -13,6 +14,7 @@ import com.example.zenflow.R
 import com.example.zenflow.databinding.FragmentLoginBinding
 import com.example.zenflow.databinding.FragmentRegisterBinding
 import com.example.zenflow.models.User
+import com.example.zenflow.ui.activity.MainContainerActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -33,7 +35,7 @@ class RegisterFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         dbref = FirebaseFirestore.getInstance().collection("user")
         binding= FragmentRegisterBinding.inflate(inflater,container,false)
@@ -76,7 +78,7 @@ class RegisterFragment : Fragment() {
     }
     private fun registerUser(username:String, email:String, password:String, number:String){
         auth = Firebase.auth
-
+        Log.d("check", "register user")
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(requireActivity()) { task ->
                 val userMobileNumber=binding.editTextPhone.text.toString()
@@ -91,6 +93,15 @@ class RegisterFragment : Fragment() {
                     // Registration successful, proceed to next step
                     Toast.makeText(context, "Registration successful!", Toast.LENGTH_SHORT).show()
                     // Navigate to the appropriate screen
+                    val intent = Intent(requireContext(), MainContainerActivity::class.java)
+                    intent.putExtra("id",id)
+                    intent.putExtra("userEmail",email)
+                    intent.putExtra("userName",user.userName)
+                    intent.putExtra("imageUri",user.imageUri)
+                    intent.putExtra("userMobileNumber",userMobileNumber)
+                    Log.d("check", "register")
+                    startActivity(intent)
+                    requireActivity().finish()
                 } else {
                     Toast.makeText(context, "Registration failed.", Toast.LENGTH_SHORT).show()
                     val exc = task.exception

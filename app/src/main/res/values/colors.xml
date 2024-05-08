@@ -2,7 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#01bf7f</color>
+    <color name="primary">#eab51e</color>
+    <color name="accent">#a54734</color>
     <color name="grey">#e7f1f3</color>
     <color name="googleColor">#4285F4</color>
     <color name="grey2">#909090</color>

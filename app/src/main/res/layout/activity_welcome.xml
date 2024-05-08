@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/luckiestguy_regular"
         android:gravity="center"
-        android:text="ZEN  FLOW"
+        android:text="@string/app_name"
         android:textColor="@color/primary"
         android:textSize="45sp"
         android:textStyle="bold"
